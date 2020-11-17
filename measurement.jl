@@ -56,9 +56,9 @@ function measurement(m::XGabaix{T},
     EE[obs[:obs_nominalrate], endo[:i_t]] = m[:e_i]^2
 
     # Variance of innovations
-    QQ[exo[:ϵ_s_t],exo[:ϵ_s_t]]   = (m[:σ_s])^2
+    QQ[exo[:ϵ_m_t],exo[:ϵ_m_t]]   = (m[:σ_m])^2
     QQ[exo[:ϵ_d_t],exo[:ϵ_d_t]]   = (m[:σ_d])^2
-    QQ[exo[:ϵ_m_t],exo[:ϵ_m_t]] = (m[:σ_m])^2
+    QQ[exo[:rm_sh],exo[:rm_sh]] = (m[:σ_s])^2
 
     return Measurement(ZZ, DD, QQ, EE)
 end

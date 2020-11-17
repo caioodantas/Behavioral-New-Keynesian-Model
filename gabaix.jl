@@ -123,7 +123,7 @@ function init_model_indices!(m::XGabaix)
 
     # Exogenous shocks
     exogenous_shocks = collect([
-        :ϵ_d_t, :ϵ_m_t, :ϵ_s_t])
+        :ϵ_d_t, :ϵ_m_t, :rm_sh])
 
     # Expectations shocks
     expected_shocks = collect([
@@ -214,7 +214,7 @@ those).
 """
 function init_parameters!(m::XGabaix)
     # Initialize parameters
-    m <= parameter(:γ, 1., (1e-3 + exp(1e-3 - 10.), 10. + exp(10. - 10.)), (1e-3, 10.), ModelConstructors.Exponential(), RootInverseGamma(1., 0.75), fixed=false,
+    m <= parameter(:γ, 1., (1e-3, 10.), (1e-3, 10.), ModelConstructors.SquareRoot(), RootInverseGamma(1., 0.75), fixed=false,
                    description="γ: Risk aversion.",
                    tex_label="\\gamma")
 
@@ -327,7 +327,7 @@ end
 function shock_groupings(m::XGabaix)
     gov = ShockGroup("η_d", [:ϵ_d_t], RGB(0.70, 0.13, 0.13)) # firebrick
     tfp = ShockGroup("η_m", [:ϵ_m_t], RGB(1.0, 0.55, 0.0)) # darkorange
-    pol = ShockGroup("pol", vcat([:ϵ_s_t], [Symbol("ϵ_s_tl$i") for i = 1:n_anticipated_shocks(m)]),
+    pol = ShockGroup("pol", vcat([:rm_sh], [Symbol("rm_shl$i") for i = 1:n_anticipated_shocks(m)]),
                      RGB(1.0, 0.84, 0.0)) # gold
     det = ShockGroup("dt", [:dettrend], :gray40)
 

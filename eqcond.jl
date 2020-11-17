@@ -42,7 +42,7 @@ function eqcond(m::XGabaix)
     Γ0[eq[:eq_phillips], endo[:x_t]] = -(-1+1/m[:β])*(1-m[:β]*m[:θ])*(m[:γ]+m[:ϕ])
     Γ0[eq[:eq_phillips], endo[:π_t]] = 1
     Γ0[eq[:eq_phillips], endo[:Eπ_t1]] = -m[:β]*m[:M]*(m[:θ]+((1-m[:β]*m[:θ])/(1-m[:β]*m[:θ]*m[:M]))*(1-m[:θ]))
-    Ψ[eq[:eq_phillips], exo[:ϵ_s_t]] = 1
+    Ψ[eq[:eq_phillips], exo[:rm_sh]] = 1
 
     ### 3. Monetary Policy Rule
 
