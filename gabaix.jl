@@ -214,7 +214,7 @@ those).
 """
 function init_parameters!(m::XGabaix)
     # Initialize parameters
-    m <= parameter(:γ, 1, (1e-3, 10), (1e-3, 10), ModelConstructors.Exponential(), RootInverseGamma(1, 0.75), fixed=false,
+    m <= parameter(:γ, 1., (1e-3 + exp(1e-3 - 10.), 10. + exp(10. - 10.)), (1e-3, 10.), ModelConstructors.Exponential(), RootInverseGamma(1., 0.75), fixed=false,
                    description="γ: Risk aversion.",
                    tex_label="\\gamma")
 
@@ -222,7 +222,7 @@ function init_parameters!(m::XGabaix)
                     description="M: Base inattention.",
                     tex_label="M")
 
-    m <= parameter(:ϕ, 1, fixed=true,
+    m <= parameter(:ϕ, 1., fixed=true,
                    description="ϕ: Survival rate of prices.",
                    tex_label="\\phi")
 
@@ -230,11 +230,11 @@ function init_parameters!(m::XGabaix)
                     description="θ: Inverse Frisch elasticity.",
                     tex_label="\\theta")
 
-    m <= parameter(:ϕ_π, 1.5, (0, 3), (0, 3), ModelConstructors.Exponential(), Normal(1.5, 0.5), fixed=false,
-                   description="ϕ_1: The weight on inflation in the monetary policy rule.",
+    m <= parameter(:ϕ_π, 1.5, (0., 3.), (0., 3.), ModelConstructors.Exponential(), Normal(1.5, 0.5), fixed=false,
+                   description="ϕ_pi: The weight on inflation in the monetary policy rule.",
                    tex_label="\\phi_\\pi")
-    m <= parameter(:ϕ_x, 0.25, (0, 3), (0, 3), ModelConstructors.Exponential(), Normal(1.5, 0.5), fixed=false,
-                   description="ϕ_2: The weight on the output gap in the monetary policy rule.",
+    m <= parameter(:ϕ_x, 0.25, (0., 3.), (0., 3.), ModelConstructors.Exponential(), Normal(1.5, 0.5), fixed=false,
+                   description="ϕ_x: The weight on the output gap in the monetary policy rule.",
                    tex_label="\\phi_x")
 
     m <= parameter(:β, 0.99, fixed=true,
@@ -253,19 +253,19 @@ function init_parameters!(m::XGabaix)
                    description="ρ_m: AR(1) coefficient on shocks to inflation.",
                    tex_label="\\rho_m")
 
-    m <= parameter(:σ_m, 0.3, (0.001, 10), (0.001, 10), ModelConstructors.Exponential(), RootInverseGamma(0.3, 1), fixed=false,
+    m <= parameter(:σ_m, 0.3, (0.001, 10.), (0.001, 10.), ModelConstructors.Exponential(), RootInverseGamma(0.3, 1.), fixed=false,
                    description="σ_m: Standard deviation of shocks to monetary rule.",
                    tex_label="\\sigma_m")
 
-    m <= parameter(:σ_d, 0.3, (0.001, 10), (0.001, 10), ModelConstructors.Exponential(), RootInverseGamma(0.3, 1), fixed=false,
+    m <= parameter(:σ_d, 0.3, (0.001, 10.), (0.001, 10.), ModelConstructors.Exponential(), RootInverseGamma(0.3, 1.), fixed=false,
                    description="σ_d: Standard deviation of shocks to GDP.",
                    tex_label="\\sigma_d")
 
-    m <= parameter(:σ_s, 0.3, (0.001, 10), (0.001, 10), ModelConstructors.Exponential(), RootInverseGamma(0.3, 1), fixed=false,
+    m <= parameter(:σ_s, 0.3, (0.001, 10.), (0.001, 10.), ModelConstructors.Exponential(), RootInverseGamma(0.3, 1.), fixed=false,
                    description="σ_s: Standard deviation of shocks to inflation.",
                    tex_label="\\sigma_s")
 
-    m <= parameter(:e_y, 0.20*0.579923, fixed=true,
+    m <= parameter(:e_x, 0.20*0.579923, fixed=true,
                                   description="e_x: Measurement error on GDP growth.",
                                   tex_label="e_x")
 
@@ -273,16 +273,16 @@ function init_parameters!(m::XGabaix)
                                   description="e_π: Measurement error on inflation.",
                                   tex_label="e_\\pi")
 
-    m <= parameter(:e_R, 0.20*2.237937, fixed=true,
+    m <= parameter(:e_i, 0.20*2.237937, fixed=true,
                                   description="e_i: Measurement error on the interest rate.",
                                   tex_label="e_i")
 
-    m <= parameter(:γ_Q, 1, fixed=true,
+    m <= parameter(:γ_Q, 1., fixed=true,
 
                                   description="γ_Q: Steady state growth rate of technology.",
                                   tex_label="\\gamma_Q")
 
-    m <= parameter(:π_star,  0, fixed=true,
+    m <= parameter(:π_star,  0., fixed=true,
                                   description="π_star: Target inflation rate.",
                                   tex_label="\\pi*")
 
@@ -325,7 +325,7 @@ function model_settings!(m::XGabaix)
 end
 
 function shock_groupings(m::XGabaix)
-    gov = ShockGroup("η_d", [:ϵ_m_t], RGB(0.70, 0.13, 0.13)) # firebrick
+    gov = ShockGroup("η_d", [:ϵ_d_t], RGB(0.70, 0.13, 0.13)) # firebrick
     tfp = ShockGroup("η_m", [:ϵ_m_t], RGB(1.0, 0.55, 0.0)) # darkorange
     pol = ShockGroup("pol", vcat([:ϵ_s_t], [Symbol("ϵ_s_tl$i") for i = 1:n_anticipated_shocks(m)]),
                      RGB(1.0, 0.84, 0.0)) # gold
