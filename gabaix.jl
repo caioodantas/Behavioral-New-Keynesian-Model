@@ -314,7 +314,7 @@ function model_settings!(m::XGabaix)
         "Observables used in semiconditional forecasts")
 
     # Metropolis-Hastings
-    m <= Setting(:mh_cc, 0.27,
+    m <= Setting(:mh_cc, 0.6,
                  "Jump size for Metropolis-Hastings (after initialization)")
 
     # Forecast
