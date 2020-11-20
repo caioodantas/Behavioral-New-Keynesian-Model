@@ -15,20 +15,23 @@ using Nullables, DataFrames, OrderedCollections, Dates
 # Instantiate the FRBNY DSGE model object
 m = XGabaix()
 
-# estimate as of 2015-Q3 using the default data vintage from 2015 Nov 27
-m <= Setting(:data_vintage, "820102")
-m <= Setting(:date_forecast_start, quartertodate("2007-Q4"))
+# estimate as of 2015-Q3 using the default data vintage from 2007 Nov 27
+m <= Setting(:date_presample_start, quartertodate("1982-Q1"),"Start date of pre-sample")
+m <= Setting(:date_forecast_start, quartertodate("2008-Q1"))
 
 # The following settings ensure that this script runs in
 # a short amount of time. To properly estimate and
 # forecast, we recommend either using the default settings
 # (i.e. comment out the settings below) or
 # changing the settings yourself.
-m <= Setting(:n_mh_simulations, 12500) # Do 100 MH steps during estimation
-#m <= Setting(:n_mh_blocks, 100)
+
+m <= Setting(:n_mh_simulations, 10000)
+m <= Setting(:n_mh_blocks, 125)
 m <= Setting(:mh_thin, 4)
+m <= Setting(:mh_cc, .06)
 m <= Setting(:use_population_forecast, false) # Population forecast not available as data to turn off
-m <= Setting(:forecast_block_size, 5) # adjust block size to run on small number of estimations
+
+#m <= Setting(:forecast_block_size, 5) # adjust block size to run on small number of estimations
 
 #############
 # Estimation
