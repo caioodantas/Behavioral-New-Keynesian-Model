@@ -25,9 +25,9 @@ m <= Setting(:date_forecast_start, quartertodate("2008-Q1"))
 # (i.e. comment out the settings below) or
 # changing the settings yourself.
 
-m <= Setting(:n_mh_simulations, 10000)
-m <= Setting(:n_mh_blocks, 125)
-m <= Setting(:mh_thin, 4)
+m <= Setting(:n_mh_simulations, 2500)
+m <= Setting(:n_mh_blocks, 500)
+m <= Setting(:n_mh_burn, 125)
 m <= Setting(:mh_cc, .06)
 m <= Setting(:use_population_forecast, false) # Population forecast not available as data to turn off
 
@@ -75,12 +75,12 @@ compute_meansbands(m, :mode, :none, output_vars; check_empty_columns = false)
 # Optionally add 10 processes to run the forecast in parallel (uncomment the 3 lines below).
 # Alternatively, you can load the ClusterManagers package and add processes
 # using one of the schedulers such as SGE or Slurm.
-# addprocs(10)
-# @everywhere using DSGE
-# m <= Setting(:use_parallel_workers, true)
+addprocs(10)
+@everywhere using DSGE
+m <= Setting(:use_parallel_workers, true)
 
-#forecast_one(m, :full, :none, output_vars; check_empty_columns = false)
-#compute_meansbands(m, :full, :none, output_vars; check_empty_columns = false)
+forecast_one(m, :full, :none, output_vars; check_empty_columns = false)
+compute_meansbands(m, :full, :none, output_vars; check_empty_columns = false)
 
 # Comment out the line below if you did not run the forecast in parallel.
-# rmprocs(procs())
+rmprocs(procs())
