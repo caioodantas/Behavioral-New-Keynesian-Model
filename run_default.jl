@@ -17,7 +17,7 @@ m = XGabaix()
 
 # estimate as of 2015-Q3 using the default data vintage from 2007 Nov 27
 m <= Setting(:date_presample_start, quartertodate("1982-Q1"),"Start date of pre-sample")
-m <= Setting(:date_forecast_start, quartertodate("2008-Q1"))
+m <= Setting(:date_forecast_start, quartertodate("2007-Q3"))
 
 # The following settings ensure that this script runs in
 # a short amount of time. To properly estimate and
@@ -28,7 +28,7 @@ m <= Setting(:date_forecast_start, quartertodate("2008-Q1"))
 m <= Setting(:n_mh_simulations, 10000)
 m <= Setting(:n_mh_blocks, 125)
 m <= Setting(:n_mh_burn, 31)
-m <= Setting(:mh_cc, .06)
+m <= Setting(:mh_cc, .5)
 m <= Setting(:mh_thin, 1)
 m <= Setting(:use_population_forecast, false) # Population forecast not available as data to turn off
 
