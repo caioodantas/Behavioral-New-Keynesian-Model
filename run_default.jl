@@ -25,10 +25,11 @@ m <= Setting(:date_forecast_start, quartertodate("2008-Q1"))
 # (i.e. comment out the settings below) or
 # changing the settings yourself.
 
-m <= Setting(:n_mh_simulations, 2500)
-m <= Setting(:n_mh_blocks, 500)
-m <= Setting(:n_mh_burn, 125)
+m <= Setting(:n_mh_simulations, 10000)
+m <= Setting(:n_mh_blocks, 125)
+m <= Setting(:n_mh_burn, 31)
 m <= Setting(:mh_cc, .06)
+m <= Setting(:mh_thin, 1)
 m <= Setting(:use_population_forecast, false) # Population forecast not available as data to turn off
 
 #m <= Setting(:forecast_block_size, 5) # adjust block size to run on small number of estimations
